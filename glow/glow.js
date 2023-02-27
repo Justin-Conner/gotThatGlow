@@ -1,0 +1,34 @@
+const canvas = document.createElement('canvas');
+canvas.width = 200;
+canvas.height = 200;
+
+const context = canvas.getContext('2d');
+
+// Define an emission function that generates a green glow
+function emit(x, y) {
+  const distance = Math.sqrt((x - canvas.width / 2) ** 2 + (y - canvas.height / 2) ** 2);
+  const intensity = Math.max(0, 1 - distance / canvas.width * 2);
+  const r = 0;
+  const g = 255 * intensity;
+  const b = 0;
+
+  return [r, g, b, 255];
+}
+
+const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+
+for (let y = 0; y < canvas.height; y++) {
+  for (let x = 0; x < canvas.width; x++) {
+    const index = (y * canvas.width + x) * 4;
+    const [r, g, b, a] = emit(x, y);
+    imageData.data[index] = r;
+    imageData.data[index + 1] = g;
+    imageData.data[index + 2] = b;
+    imageData.data[index + 3] = a;
+  }
+}
+
+context.putImageData(imageData, 0, 0);
+
+const glow = document.getElementById('glow');
+glow.style.backgroundImage = `url(${canvas.toDataURL()})`;

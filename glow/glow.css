@@ -1,0 +1,15 @@
+#glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: transparent;
+  }
+  
+  body {
+    background-color: black;
+  }
+  
